@@ -8,8 +8,8 @@ const servidor = http.createServer((req,res)=>{
     if(req.url == '/enviodearquivo'){
         const form = new formidable.IncomingForm()
         form.parse(req,(erro,campos,arquivos)=>{
-            const urlantiga = arquivos.filetoupload.path;
-            const urlnova = "C:/Users/danie/Documents/GitHub/Curso-de-Node/Curso/aula12"+arquivos.filetoupload.name
+            const urlantiga = arquivos.filetoupload.filepath;
+            const urlnova = "C:/Users/danie/Documents/GitHub/Curso-de-Node/Curso/aula12"+ arquivos.filetoupload.originalFileName+'.png';
             fs.rename(urlantiga,urlnova,(erro)=>{
                 if(erro)throw erro
                 res.write('arquivo movido!')
