@@ -1,5 +1,5 @@
 const mongodb = require('mongodb').MongoClient
-const url="mongodb+srv://varnahal:chuvachu@varnahal.wu5lufq.mongodb.net/?retryWrites=true&w=majority"
+const url="mongodb+srv://varnahal:<password>@varnahal.wu5lufq.mongodb.net/?retryWrites=true&w=majority"
 mongodb.connect(url,(erro,banco)=>{
     if(erro) throw erro;
     const dbo = banco.db("Varnahal");
