@@ -1,28 +1,68 @@
 const mongodb = require('mongodb').MongoClient
-const url="mongodb+srv://varnahal:<password>@varnahal.wu5lufq.mongodb.net/?retryWrites=true&w=majority"
+const url="mongodb+srv://varnahal:chuvachu@varnahal.wu5lufq.mongodb.net/?retryWrites=true&w=majority"
 mongodb.connect(url,(erro,banco)=>{
     if(erro) throw erro;
     const dbo = banco.db("Varnahal");
-    // const obj = {curso:"curso de Blender",canal:"Varnahal"}
-    //  dbo.collection("Cursos").insertOne(obj,(erro,res)=>{
-    //      if(erro)throw erro;
-    //      console.log("1 novo curso inserido")
-    //      banco.close()
-    //  })
 
-    // dbo.collection("Cursos").find({canal:"Varnahal"},{projection:{_id:0,canal:0}}).toArray((erro,res)=>{
+    // inserir algo no banco de dados
+    // const obj = [
+    //     {curso:"curso de Blender",canal:"Varnahal"},
+    //     {curso:"curso de Blender",canal:"Varnahal"},
+    //     {curso:"curso de Blender",canal:"Varnahal"}
+    // ]
+    // dbo.collection("Cursos").insertMany(obj,async (erro,res)=>{
     //     if(erro)throw erro;
-    //     console.log(res[0].curso)
+    //     await console.log(res.insertedCount + "novo(s) curso(s) inserido(s)")
+    //     banco.close()
+         
+    // })
+
+
+    // //pesquisar algo no banco de dados
+    // dbo.collection("Cursos").find({}).toArray((erro,res)=>{
+    //     if(erro)throw erro;
+    //     console.log(res)
+        
+    // })
+
+
+    //buscando algo ultilizando regex
+    // const query={curso: /c./}
+
+    // dbo.collection("Cursos").find(query,{projection:{_id:0}}).toArray((erro,res)=>{
+    //     if(erro)throw erro;
+    //     console.log(res)
     //     banco.close()
     // })
 
-    const query={curso: /c./}
 
-    dbo.collection("Cursos").find(query,{projection:{_id:0}}).toArray((erro,res)=>{
+    //como ordenar algo de forma crescente ou decrescente
+    // const ordenacao={curso:-1}//ordenar crescente -> 1 decrescente-> -1
+    // const query={}
+    // dbo.collection("Cursos").find(query).sort(ordenacao).toArray((erro,res)=>{
+    //     if(erro)throw erro;
+    //     console.log(res)
+    //     banco.close()
+    // })
+
+    //Deletar algo do banco de dados(ordenação)
+    let query={curso: /.Blender/}
+
+    // dbo.collection("Cursos").delete(query,(erro,res)=>{
+    //     if(erro)throw erro;
+    //     console.log('um curso deletado')
+    //      banco.close()
+    // })
+    dbo.collection("Cursos").deleteMany(query,(erro,res)=>{
         if(erro)throw erro;
-        console.log(res)
-        banco.close()
+        console.log(res.deletedCount+ 'um curso deletado')
+        
     })
 
+     dbo.collection("Cursos").find({}).toArray((erro,res)=>{
+         if(erro)throw erro;
+         console.log(res)
+         banco.close()
+     })
 
 })
