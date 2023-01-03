@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
-const routes = require('./routes')
+const routes = require('./routes');
+const morgan = require('morgan');
+require('./config/connection')
 
 
 class App{
@@ -12,7 +14,7 @@ class App{
 
     middlewares(){
         this.app.use(express.json())
-
+        this.app.use(morgan('dev'))
         this.app.use((req,res,next)=>{
             res.header("Access-Controll-Allow-Origin","*")
             res.header("Access-Controll-Allow-methods","Get,POST,PUT,DELETE")
