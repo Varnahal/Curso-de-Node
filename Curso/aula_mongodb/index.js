@@ -1,5 +1,8 @@
 const mongodb = require('mongodb').MongoClient
-const url="mongodb+srv://varnahal:chuvachu@varnahal.wu5lufq.mongodb.net/?retryWrites=true&w=majority"
+require('dotenv').config()
+const DB_USER = process.env.DB_USER
+const DB_PASS = process.env.DB_PASS
+const url=`mongodb+srv://${DB_USER}:${DB_PASS}@varnahal.wu5lufq.mongodb.net/?retryWrites=true&w=majority`
 function pesquisanobanco(){mongodb.connect(url,async(erro,banco)=>{
     if(erro) throw erro;
     const dbo = banco.db("Varnahal");
