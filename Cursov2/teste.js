@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize')
-const bcrypt = require('bcrypt')
 const sequelize = new Sequelize('teste','root','chuvachu',{
     host:'localhost',
     dialect:'mysql'
