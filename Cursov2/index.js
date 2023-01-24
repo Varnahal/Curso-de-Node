@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
+const Post = require('./models/Post')
 
 
 //Config
@@ -12,21 +13,42 @@ const bodyParser = require('body-parser')
         app.use(bodyParser.urlencoded({extended:false}))
         app.use(bodyParser.json())
 
-    //Conexão com o banco de daados mysql
-        const Sequelize = require('sequelize')
-const { urlencoded } = require('body-parser')
-        const sequelize = new Sequelize('teste','root','chuvachu',{
-            host:'localhost',
-            dialect:'mysql'
-        })
+    
 //Rotas
+    app.get('/',(req,res)=>{
+        Post.findAll({order:[['id','DESC']]}).then((posts)=>{
+            res.render('home',{posts:posts})   
+        })
+        
+    })
+
     app.get('/cad',(req,res)=>{
         res.render('formulario')
 
     })
     app.post('/add',(req,res)=>{
-        console.log(req.body)
-        res.send('Titulo: '+req.body.titulo +"<br>"+"Conteudo: "+req.body.conteudo)
+        Post.create({
+            titulo: req.body.titulo,
+            conteudo: req.body.conteudo
+        })
+        .then(()=>{console.log('deu tudo certo')})
+        .then(()=>{res.redirect('/')})
+        .catch((err)=>{res.send('deu tudo errado'+ err)})
+    })
+    app.get('/del/:id',async (req,res)=>{
+        const post =await Post.findAll({where:{'id':req.params.id}})
+        if(post.length>0){
+           Post.destroy({where:{'id':req.params.id}})
+        .then(()=>{
+            res.send('Postagem deletada com sucesso')
+        }) 
+        }else{
+            res.send('Postagem não encontrada erro:')
+        }
+
+
+        
+        
     })
 
 
